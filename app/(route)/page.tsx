@@ -3,11 +3,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import InterviewCard from "@/components/interviewCard";
 import {
-    getCurrentUser,
     getInterviewsByUserId,
     getLatestInterviews,
-} from "@/lib/actions/auth_action";
-
+}
+from "@/lib/actions/general.action";
+import {getCurrentUser } from "@/lib/actions/auth_action";
 async function Home() {
     const user = await getCurrentUser();
 
@@ -59,7 +59,7 @@ async function Home() {
 
                 <div className="interviews-section">
                     {hasPastInterviews ? (
-                        userInterviews.map((interview) => (
+                        userInterviews?.map((interview) => (
                             <InterviewCard
                                 key={interview.id}
                                 userId={user.id}
@@ -81,7 +81,7 @@ async function Home() {
 
                 <div className="interviews-section">
                     {hasUpcomingInterviews ? (
-                        allInterview.map((interview) => (
+                        allInterview?.map((interview) => (
                             <InterviewCard
                                 key={interview.id}
                                 userId={user.id}
