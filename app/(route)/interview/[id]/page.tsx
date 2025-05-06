@@ -21,7 +21,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
 
     const feedback = await getFeedbackByInterviewId({
         interviewId: id,
-        userId: user?.id,
+        userId: user?.id!,
     });
 
     return (
@@ -42,13 +42,13 @@ const InterviewDetails = async ({ params }: RouteParams) => {
                     <DisplayTechIcons techStack={interview.techstack} />
                 </div>
 
-                <p className="bg-dark-200 px-4 py-2 rounded-lg h-fit capitalize">
+                <p className="bg-dark-200 px-4 py-2 rounded-lg h-fit">
                     {interview.type}
                 </p>
             </div>
 
             <Agent
-                userName={user?.name}
+                userName={user?.name!}
                 userId={user?.id}
                 interviewId={id}
                 type="interview"

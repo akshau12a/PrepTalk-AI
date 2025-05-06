@@ -15,7 +15,6 @@ const DisplayTechIcons = async ({ techStack }: TechIconProps) => {
                         index >= 1 && "-ml-3"
                     )}
                 >
-                    {/*index >= 1 && "-ml-3" this line will print how many icons should come in a single row */}
                     <span className="tech-tooltip">{tech}</span>
 
                     <Image

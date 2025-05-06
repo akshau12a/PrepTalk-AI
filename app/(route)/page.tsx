@@ -1,35 +1,25 @@
 import Link from "next/link";
 import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
 import InterviewCard from "@/components/interviewCard";
+
+import { getCurrentUser } from "@/lib/actions/auth_action";
 import {
     getInterviewsByUserId,
     getLatestInterviews,
-}
-from "@/lib/actions/general.action";
-import {getCurrentUser } from "@/lib/actions/auth_action";
+} from "@/lib/actions/general.action";
+
 async function Home() {
     const user = await getCurrentUser();
 
-    // Check if user is logged in
-    if (!user) {
-        return (
-            <div className="text-center mt-10">
-                <h2>Please sign in to view your interviews.</h2>
-                <Button asChild className="btn-primary mt-4">
-                    <Link href="/login">Go to Login</Link>
-                </Button>
-            </div>
-        );
-    }
-
     const [userInterviews, allInterview] = await Promise.all([
         getInterviewsByUserId(user.id),
-        getLatestInterviews({ userId: user.id }),
+        getLatestInterviews({ userId: user.id}),
     ]);
 
-    const hasPastInterviews = (userInterviews?.length || 0) > 0;
-    const hasUpcomingInterviews = (allInterview?.length || 0) > 0;
+    const hasPastInterviews = (userInterviews?.length || 0)>0;
+    const hasUpcomingInterviews = (allInterview?.length || 0 )> 0;
 
     return (
         <>
@@ -62,7 +52,7 @@ async function Home() {
                         userInterviews?.map((interview) => (
                             <InterviewCard
                                 key={interview.id}
-                                userId={user.id}
+                                userId={user?.id}
                                 interviewId={interview.id}
                                 role={interview.role}
                                 type={interview.type}
@@ -71,20 +61,20 @@ async function Home() {
                             />
                         ))
                     ) : (
-                        <p>You haven&apos;t taken any interviews yet.</p>
+                        <p>You haven&apos;t taken any interviews yet</p>
                     )}
                 </div>
             </section>
 
             <section className="flex flex-col gap-6 mt-8">
-                <h2>Take Interviews</h2>
+                <h2>Company-Specific Interview Question</h2>
 
                 <div className="interviews-section">
                     {hasUpcomingInterviews ? (
                         allInterview?.map((interview) => (
                             <InterviewCard
                                 key={interview.id}
-                                userId={user.id}
+                                userId={user?.id}
                                 interviewId={interview.id}
                                 role={interview.role}
                                 type={interview.type}
@@ -93,7 +83,7 @@ async function Home() {
                             />
                         ))
                     ) : (
-                        <p>There are no interviews available.</p>
+                        <p>Coming soon</p>
                     )}
                 </div>
             </section>

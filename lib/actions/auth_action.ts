@@ -1,7 +1,6 @@
 "use server";
 
 import { auth, db } from "@/FireBase/admin";
-import { doc } from "firebase/firestore";
 import { cookies } from "next/headers";
 
 // Session duration (1 week)
@@ -30,7 +29,7 @@ export async function signUp(params: SignUpParams) {
     const { uid, name, email } = params;
 
     try {
-
+        // check if user exists in db
         const userRecord = await db.collection("users").doc(uid).get();
         if (userRecord.exists)
             return {
@@ -131,4 +130,3 @@ export async function isAuthenticated() {
     const user = await getCurrentUser();
     return !!user;
 }
-
